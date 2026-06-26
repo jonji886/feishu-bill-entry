@@ -111,7 +111,7 @@ lark-cli base +field-list --as user --base-token "<your_base_token>" --table-id 
 - 不允许写"近似但不存在"的分类。
 - 多候选时必须追问。
 
-完整映射见 [`references/type-map.md`](references/type-map.md)（数据源为 [`references/type-map.json`](references/type-map.json)，修改后无需改动代码）。
+完整映射见 [`references/type-map.json`](references/type-map.json)，修改后无需改动代码。
 
 ## 写入前检查
 
