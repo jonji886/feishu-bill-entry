@@ -95,12 +95,8 @@ feishu-bill-entry/
 
 ## 文档
 
-完整说明请查看 [SKILL.md](./SKILL.md)，包含：
-
-- 字段映射规则
-- 10 条自测用例
-- FAQ
-- 安全建议
+- [SKILL.md](./SKILL.md) 为 Agent 执行精简版（低 token）。
+- 当前 README 提供新人上手所需的完整说明与背景信息。
 
 ## 前置条件
 
