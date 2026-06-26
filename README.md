@@ -198,18 +198,18 @@ lark-cli base +field-list \
 
 ```mermaid
 flowchart TD
-    A[用户输入: "中饭 30元"] --> B[parse_bill.py 规则解析]
-    B --> C{金额、类型<br>都唯一确定?}
-    C -->|❌ 缺金额或无匹配| D[返回 ask_user<br>追问具体信息]
+    A["用户输入: 「中饭 30元」"] --> B["parse_bill.py 规则解析"]
+    B --> C{"金额、类型<br>都唯一确定?"}
+    C -->|❌ 缺金额或无匹配| D["返回 ask_user<br>追问具体信息"]
     D --> A
-    C -->|⚠️ 多个候选| E[返回 ask_user<br>让用户选择]
+    C -->|⚠️ 多个候选| E["返回 ask_user<br>让用户选择"]
     E --> A
-    C -->|✅ 是| F[构造 create_record]
-    F --> G[write_bill.py 校验<br>表名 / 字段 / 枚举]
-    G --> H{校验通过?}
-    H -->|❌ 否| I[报错并提示修正]
-    H -->|✅ 是| J[调用 lark-cli API<br>写入多维表格]
-    J --> K[返回写入结果]
+    C -->|✅ 是| F["构造 create_record"]
+    F --> G["write_bill.py 校验<br>表名 / 字段 / 枚举"]
+    G --> H{"校验通过?"}
+    H -->|❌ 否| I["报错并提示修正"]
+    H -->|✅ 是| J["调用 lark-cli API<br>写入多维表格"]
+    J --> K["返回写入结果"]
 ```
 
 **核心原则：宁可多问一次，也不写错一笔。**
