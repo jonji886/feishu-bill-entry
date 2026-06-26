@@ -1,0 +1,130 @@
+{
+  "table_name": "明细表",
+  "description": "飞书多维表格账单明细表 — 用于 feishu-bill-entry skill 的写入目标",
+  "fields": [
+    {
+      "field_name": "日期",
+      "field_type": "date",
+      "field_type_id": 5,
+      "required": true,
+      "parse_field": "date",
+      "description": "消费发生日期，默认今天，支持昨天/前天自动推算",
+      "example": "2026-06-26",
+      "note": "格式 YYYY-MM-DD；脚本自动计算，无需手动输入"
+    },
+    {
+      "field_name": "月份",
+      "field_type": "single_select",
+      "field_type_id": 3,
+      "required": true,
+      "parse_field": "month",
+      "description": "由日期自动换算，用于月度筛选和统计",
+      "options": [
+        "1月", "2月", "3月", "4月", "5月", "6月",
+        "7月", "8月", "9月", "10月", "11月", "12月"
+      ],
+      "example": "6月",
+      "note": "单选字段，仅限上述 12 个值；脚本自动计算"
+    },
+    {
+      "field_name": "支付平台",
+      "field_type": "single_select",
+      "field_type_id": 3,
+      "required": false,
+      "parse_field": "payment_platform",
+      "description": "支付渠道，仅在语句中明确提及时才填写",
+      "options": ["支付宝", "微信", "信用卡"],
+      "example": "支付宝",
+      "note": "可选字段；语句中未提及则留空"
+    },
+    {
+      "field_name": "类型",
+      "field_type": "single_select",
+      "field_type_id": 3,
+      "required": true,
+      "parse_field": "category",
+      "description": "消费/收入分类，必须使用已有枚举值，不得新增",
+      "options": [
+        "餐食（三餐+盒马山姆都算）",
+        "停车费及其他交通费",
+        "车子养护（电费、保养等）",
+        "水电费",
+        "话费",
+        "物业费",
+        "房贷",
+        "服饰大类",
+        "养狗相关费用",
+        "医药费",
+        "旅行费用（含etc）",
+        "兴趣类支出",
+        "其他家用",
+        "热植相关",
+        "节日、礼金等",
+        "小健家招待",
+        "公司请客",
+        "工资收入",
+        "其他收入",
+        "理财收入",
+        "亚琪副业"
+      ],
+      "example": "餐食（三餐+盒马山姆都算）",
+      "note": "枚举定义见 references/type-map.json；解析时按关键词匹配"
+    },
+    {
+      "field_name": "收支类型",
+      "field_type": "single_select",
+      "field_type_id": 3,
+      "required": true,
+      "parse_field": "income_type",
+      "description": "标识收入还是支出",
+      "options": ["支出", "收入"],
+      "example": "支出",
+      "note": "仅两个值；收入分类由 type-map.json 的 income_categories 定义"
+    },
+    {
+      "field_name": "订单号",
+      "field_type": "text",
+      "field_type_id": 1,
+      "required": false,
+      "parse_field": "order_no",
+      "description": "预留字段，目前暂未使用",
+      "example": "",
+      "note": "可选；可空，当前脚本始终写入空字符串"
+    },
+    {
+      "field_name": "流水说明",
+      "field_type": "text",
+      "field_type_id": 1,
+      "required": true,
+      "parse_field": "note",
+      "description": "账单的纯文本描述，已去除金额数字和时间前缀词",
+      "example": "中饭",
+      "note": "脚本自动清洗：去掉金额（如 '30元'）和时间词（如 '今天''昨晚'）"
+    },
+    {
+      "field_name": "款项",
+      "field_type": "number",
+      "field_type_id": 2,
+      "required": true,
+      "parse_field": "amount",
+      "description": "金额数值，收入为正数，支出为正数，退款为负数",
+      "example": 30,
+      "note": "退款时脚本自动取负值（如退款 25 → -25）"
+    }
+  ],
+  "field_mapping": {
+    "date": "日期",
+    "month": "月份",
+    "payment_platform": "支付平台",
+    "category": "类型",
+    "income_type": "收支类型",
+    "order_no": "订单号",
+    "note": "流水说明",
+    "amount": "款项"
+  },
+  "metadata": {
+    "version": "1.0.0",
+    "source": "feishu-bill-entry skill",
+    "type_map_ref": "references/type-map.json"
+  }
+}
