@@ -124,7 +124,11 @@ def build_record(text: str, now: datetime):
     date_str = date_dt.strftime("%Y-%m-%d")
     month = f"{date_dt.month}月"
     platform = resolve_platform(text)
-    note = text.strip()[:120]
+
+    # 从原文中去掉金额部分，保留纯描述作为流水说明
+    note = text.strip()
+    note = re.sub(r"(?<!\d)(\d+(?:\.\d+)?)\s*元?", "", note).strip()
+    note = note[:120] if note else text.strip()[:120]
 
     return {
         "action": "create_record",
