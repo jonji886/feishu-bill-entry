@@ -111,7 +111,7 @@ lark-cli base +field-list --as user --base-token "<your_base_token>" --table-id 
 - 不允许写"近似但不存在"的分类。
 - 多候选时必须追问。
 
-完整映射见 [`references/type-map.md`](references/type-map.md)。
+完整映射见 [`references/type-map.md`](references/type-map.md)（数据源为 [`references/type-map.json`](references/type-map.json)，修改后无需改动代码）。
 
 ## 写入前检查
 
@@ -233,7 +233,7 @@ python3 scripts/parse_bill.py --text "今天中饭消费 30 元" \
 
 5. **现象：分类看起来"识别错了"**
    原因：当前采用规则优先，关键词可能与你的业务语义不一致。
-   处理：修改 `scripts/parse_bill.py` 中 `TYPE_MAP` 关键词映射。
+   处理：修改 `references/type-map.json` 中对应分类的关键词列表。
 
 ## 自测语句（10条）
 

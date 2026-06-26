@@ -68,7 +68,8 @@ flowchart TD
 feishu-bill-entry/
 ├── SKILL.md              # Agent skill 主文档（完整说明）
 ├── references/
-│   └── type-map.md       # 分类关键词映射表
+│   ├── type-map.md       # 分类关键词映射表（人类可读）
+│   └── type-map.json     # 分类映射数据源（脚本自动读取）
 ├── scripts/
 │   ├── parse_bill.py     # 自然语言解析器
 │   ├── write_bill.py     # Base 写入器
