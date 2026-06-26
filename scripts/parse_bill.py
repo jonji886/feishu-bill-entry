@@ -17,6 +17,18 @@ INCOME_CATEGORIES = set(_data.get("income_categories", []))
 PAYMENT_HINTS = {"支付宝": "支付宝", "微信": "微信", "信用卡": "信用卡"}
 REFUND_HINTS = ("退款", "退了", "退回", "退我")
 
+# 需要从流水说明中去掉的时间前缀词
+_TIME_REMOVE_WORDS = [
+    "今天", "昨天", "前天", "明天", "后天",
+    "昨晚", "今晚", "明晚",
+    "早上", "上午", "中午", "下午", "晚上", "清晨", "凌晨", "午后", "傍晚", "晚间",
+    "今早", "今晨", "今晚上", "明早", "明晚上", "昨早",
+    "这个月", "上个月", "下个月", "这周", "上周", "下周",
+]
+_TIME_RE_PATTERN = re.compile(
+    r"(?:(?<=^)|(?<=^.)|(?<=\s))(?:" + "|".join(re.escape(w) for w in _TIME_REMOVE_WORDS) + r")(?:\s*)"
+)
+
 
 def resolve_date(text: str, now: datetime) -> datetime:
     if "前天" in text:
@@ -97,9 +109,10 @@ def build_record(text: str, now: datetime):
     month = f"{date_dt.month}月"
     platform = resolve_platform(text)
 
-    # 从原文中去掉金额部分，保留纯描述作为流水说明
+    # 从原文中去掉金额和时间词，保留纯描述作为流水说明
     note = text.strip()
     note = re.sub(r"(?<!\d)(\d+(?:\.\d+)?)\s*元?", "", note).strip()
+    note = _TIME_RE_PATTERN.sub("", note).strip()
     note = note[:120] if note else text.strip()[:120]
 
     return {
