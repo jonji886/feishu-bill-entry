@@ -1,0 +1,5 @@
+# Local env for public-safe sharing
+.env
+.env.local
+*.local
+
